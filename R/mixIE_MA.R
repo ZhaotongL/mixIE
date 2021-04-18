@@ -52,8 +52,10 @@ mixIE_multiple_start <- function(b_exp,b_out,se_exp,se_out,n,
 
   m = length(b_exp)
   bound.theta <- max(abs(b_out/b_exp))
+  mrivw = mr_ivw_fe(b_exp,b_out,se_exp,se_out)
+  mregger = mr_egger_ll(b_exp,b_out,se_exp,se_out)
   theta_seq = runif(initial_theta_n,min=min(b_out/b_exp),max=max(b_out/b_exp))
-  theta_seq = c(0,theta_seq,min(b_out/b_exp),max(b_out/b_exp))
+  theta_seq = c(0,theta_seq,min(b_out/b_exp),max(b_out/b_exp),mrivw$b,mregger$b)
   starting_values = crossing(theta_seq,initial_r)
   r_seq = starting_values$initial_r
   theta_seq = starting_values$theta_seq
