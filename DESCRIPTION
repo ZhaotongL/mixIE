@@ -1,13 +1,34 @@
 Package: mixIE
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Type: Package
+Title: Mendelian randomization method with a mixture of regressions 
+Version: 0.1.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: What license it uses
+    c(person(given = "Zhaotong",
+             family = "Lin",
+             role = c("aut", "cre"),
+             email = "lin00374@umn.edu"),
+      person(given = "Yangqing",
+             family = "Deng",
+             role = c("aut")
+             ),
+      person(given = "Wei",
+             family = "Pan",
+             role = c("aut")
+             )
+             )
+Author: Zhaotong Lin [aut, cre],
+  	    Yangqing Deng [aut],
+  	    Wei Pan [aut]
+Maintainer: Zhaotong Lin <lin00374@umn.edu>
+Description: Permorm mixIE methods including mixIE-MA and mixIE-MA-DP.
+Imports:
+    stats,
+    ggplot2,
+    tidyr,
+    HelpersMG
+Depends:
+    R (>= 2.10)
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.1.1
