@@ -119,12 +119,12 @@ mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip,
   out.summary = list(mixIE_MA_theta=f_og_result$theta_BIC_MA,
                      mixIE_MA_se=f_og_result$se_BIC_MA,
                      mixIE_MA_pval=f_og_result$pval_BIC_MA,
-                     mixIE_MA_pi=mean(f_og_result$tau_BIC_MA>0.5),
+                     mixIE_MA_pi=mean(f_og_result$tau_BIC_MA>=0.5),
                      mixIE_MA_tau=f_og_result$tau_BIC_MA,
                      mixIE_MA_DP_theta=fdp_theta,
                      mixIE_MA_DP_se=fdp_se,
                      mixIE_MA_DP_pval=fdp_pval,
-                     mixIE_MA_DP_pi=mean(invalid_count_B>0.5),
+                     mixIE_MA_DP_pi=mean(invalid_count_B>=0.5),
                      mixIE_MA_DP_tau=invalid_count_B)
   out = out.summary
   if(diagnostic_plot==T){
