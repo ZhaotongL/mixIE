@@ -172,53 +172,63 @@ mixIE_multiple_start <- function(b_exp,b_out,se_exp,se_out,n,
 #'
 mixIE_MA <- function(b_exp,b_out,se_exp,se_out,n,
                      n_model=5,...){
-  mixIEms_BIC = mixIE_multiple_start(b_exp,b_out,se_exp,se_out,n=n,...)
-  if(TRUE){
-    keep_ind = is.finite(mixIEms_BIC$theta) & is.finite(mixIEms_BIC$BIC)
-    theta_vec = mixIEms_BIC$theta[keep_ind]
-    p_vec = mixIEms_BIC$p[keep_ind]
-    r_vec = mixIEms_BIC$r[keep_ind]
-    c_vec = mixIEms_BIC$c[keep_ind]
-    se_vec = mixIEms_BIC$se[keep_ind]
-    ser_vec = mixIEms_BIC$ser[keep_ind]
-    BIC_vec = mixIEms_BIC$BIC[keep_ind]
-    BIC_vec = BIC_vec - min(BIC_vec)
-    tau_1_mat = mixIEms_BIC$tau_1_mat[keep_ind,]
+  if(length(b_exp)==2){
+    ivw_res = mr_ivw_fe(b_exp,b_out,se_exp,se_out)
+    theta_BIC_MA=ivw_res$b
+    se_BIC_MA=ivw_res$se
+    pval_BIC_MA=ivw_res$pval
+    r_BIC_MA=0
+    p_BIC_MA=0
+    c_BIC_MA=1
+    tau_BIC_MA=rep(0,2)
+  } else{
+    mixIEms_BIC = mixIE_multiple_start(b_exp,b_out,se_exp,se_out,n=n,...)
+    if(TRUE){
+      keep_ind = is.finite(mixIEms_BIC$theta) & is.finite(mixIEms_BIC$BIC)
+      theta_vec = mixIEms_BIC$theta[keep_ind]
+      p_vec = mixIEms_BIC$p[keep_ind]
+      r_vec = mixIEms_BIC$r[keep_ind]
+      c_vec = mixIEms_BIC$c[keep_ind]
+      se_vec = mixIEms_BIC$se[keep_ind]
+      ser_vec = mixIEms_BIC$ser[keep_ind]
+      BIC_vec = mixIEms_BIC$BIC[keep_ind]
+      BIC_vec = BIC_vec - min(BIC_vec)
+      tau_1_mat = mixIEms_BIC$tau_1_mat[keep_ind,]
 
-    BICmodel_ind =  c()
-    i = j = 1
-    while(i<length(theta_vec)){
-      BICmodel_ind = c(BICmodel_ind,i)
-      for(j in (i+1):length(theta_vec)){
-        if(abs(theta_vec[j]-theta_vec[i])<1e-04) next
-        if(abs(theta_vec[j]-theta_vec[i])>1e-04) break
+      BICmodel_ind =  c()
+      i = j = 1
+      while(i<length(theta_vec)){
+        BICmodel_ind = c(BICmodel_ind,i)
+        for(j in (i+1):length(theta_vec)){
+          if(abs(theta_vec[j]-theta_vec[i])<1e-04) next
+          if(abs(theta_vec[j]-theta_vec[i])>1e-04) break
+        }
+        i = j
       }
-      i = j
+      if(!is.null(BICmodel_ind)){
+        if(abs(theta_vec[i]-theta_vec[BICmodel_ind[length(BICmodel_ind)]]) > 1e-04) BICmodel_ind=c(BICmodel_ind,i)}
+      BICmodel_ind = BICmodel_ind[1:min(length(BICmodel_ind),n_model)]
+      if(is.null(BICmodel_ind)){BICmodel_ind=1}
+      weight_vec = exp(-1/2*BIC_vec[BICmodel_ind])
+      weight_vec = weight_vec/sum(weight_vec)
+      theta_BIC_MA = sum(weight_vec*theta_vec[BICmodel_ind])
+      r_BIC_MA = sum(weight_vec*r_vec[BICmodel_ind])
+      c_BIC_MA = sum(weight_vec*c_vec[BICmodel_ind])
+      if(length(BICmodel_ind)>1){
+        tau_BIC_MA = colSums(weight_vec*tau_1_mat[BICmodel_ind,])
+      } else if(is.vector(tau_1_mat)){
+        tau_BIC_MA = tau_1_mat
+      } else{
+        tau_BIC_MA = tau_1_mat[BICmodel_ind,]
+      }
+      p_BIC_MA = mean(tau_BIC_MA>0.5)
+      se_BIC_MA = sum(weight_vec*sqrt(se_vec[BICmodel_ind]^2 +(theta_vec[BICmodel_ind] -theta_BIC_MA)^2))
+      ser_BIC_MA = sum(weight_vec*sqrt(ser_vec[BICmodel_ind]^2 +(r_vec[BICmodel_ind] -r_BIC_MA)^2))
+      pval_BIC_MA = 2*pnorm(abs(theta_BIC_MA/se_BIC_MA),lower.tail=FALSE)
+      pvalr_BIC_MA = 2*pnorm(abs(r_BIC_MA/ser_BIC_MA),lower.tail=FALSE)
     }
-    if(!is.null(BICmodel_ind)){
-      if(abs(theta_vec[i]-theta_vec[BICmodel_ind[length(BICmodel_ind)]]) > 1e-04) BICmodel_ind=c(BICmodel_ind,i)}
-    BICmodel_ind = BICmodel_ind[1:min(length(BICmodel_ind),n_model)]
-    if(is.null(BICmodel_ind)){BICmodel_ind=1}
-    weight_vec = exp(-1/2*BIC_vec[BICmodel_ind])
-    weight_vec = weight_vec/sum(weight_vec)
-    theta_BIC_MA = sum(weight_vec*theta_vec[BICmodel_ind])
-    r_BIC_MA = sum(weight_vec*r_vec[BICmodel_ind])
-    c_BIC_MA = sum(weight_vec*c_vec[BICmodel_ind])
-    if(length(BICmodel_ind)>1){
-      tau_BIC_MA = colSums(weight_vec*tau_1_mat[BICmodel_ind,])
-    } else if(is.vector(tau_1_mat)){
-      tau_BIC_MA = tau_1_mat
-    } else{
-      tau_BIC_MA = tau_1_mat[BICmodel_ind,]
-    }
-    p_BIC_MA = mean(tau_BIC_MA>0.5)
-    se_BIC_MA = sum(weight_vec*sqrt(se_vec[BICmodel_ind]^2 +(theta_vec[BICmodel_ind] -theta_BIC_MA)^2))
-    ser_BIC_MA = sum(weight_vec*sqrt(ser_vec[BICmodel_ind]^2 +(r_vec[BICmodel_ind] -r_BIC_MA)^2))
-    pval_BIC_MA = 2*pnorm(abs(theta_BIC_MA/se_BIC_MA),lower.tail=FALSE)
-    pvalr_BIC_MA = 2*pnorm(abs(r_BIC_MA/ser_BIC_MA),lower.tail=FALSE)
-  }
 
-
+}
   return(list(theta_BIC_MA=theta_BIC_MA,se_BIC_MA=se_BIC_MA,pval_BIC_MA=pval_BIC_MA,
               r_BIC_MA=r_BIC_MA,p_BIC_MA=p_BIC_MA,c_BIC_MA=c_BIC_MA,
               tau_BIC_MA=tau_BIC_MA,
