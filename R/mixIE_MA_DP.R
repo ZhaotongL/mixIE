@@ -72,11 +72,8 @@ mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip,
   }
   if(length(b_exp)==2){
     ivw_res = mr_ivw_fe(b_exp,b_out,se_exp,se_out)
-    mixIE_MA_theta = mixIE_MA_DP_theta = ivw_res$b
-    mixIE_MA_se = mixIE_MA_DP_se = ivw_res$se
-    mixIE_MA_pval = mixIE_MA_DP_pval = ivw_res$pval
-    mixIE_MA_pi = mixIE_MA_DP_pi = 0
-    mixIE_MA_tau = mixIE_MA_DP_tau = rep(0,2)
+    out = list(mixIE_MA_theta=ivw_res$b, mixIE_MA_se=ivw_res$se, mixIE_MA_pval=ivw_res$pval, mixIE_MA_pi=0, mixIE_MA_tau=rep(0,2),
+               mixIE_MA_DP_theta=ivw_res$b, mixIE_MA_DP_se=ivw_res$se, mixIE_MA_DP_pval=ivw_res$pval, mixIE_MA_DP_pi=0, mixIE_MA_DP_tau=rep(0,2))
   } else{
     theta_f_B  = se_f_B = rep(NaN,B)
     m = length(b_exp)
