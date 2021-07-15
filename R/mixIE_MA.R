@@ -38,7 +38,7 @@
 #'
 mixIE_multiple_start <- function(b_exp,b_out,se_exp,se_out,n,
                                  initial_theta_n=50,initial_r=0,initial_c=1,initial_p=0.2,
-                                 flip=0, EM_start=T,EM_maxit=2,
+                                 flip=1, EM_start=T,EM_maxit=2,
                                  maxit=200,ivw=T,egger=T){
   if(flip==1){
     sign0 <- function(x) {

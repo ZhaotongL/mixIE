@@ -59,7 +59,7 @@
 #' result$scatter_og.plot # mixIE-MA
 #' result$scatter_dp.plot # mixIE-MA-DP
 #'
-mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip,
+mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip=1,
                        B=200,thres_e=Inf,diagnostic_plot=FALSE,...){
   if(flip==1){
     sign0 <- function(x) {
