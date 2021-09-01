@@ -17,6 +17,8 @@
 #' @param maxit Maximum number of iterations for each optimization, default is 200.
 #' @param ivw Whether to add the fixed effect IVW in the model candidates explictly? Default is TRUE.
 #' @param egger Whether to add the Egger regression in the model candidates explictly? Default is TRUE.
+#' @param lb.theta Lower bound of theta from which starting values are generated.
+#' @param ub.theta Upper bound of theta from which starting values are generated.
 #'
 #' @import tidyr
 #'
@@ -39,7 +41,7 @@
 mixIE_multiple_start <- function(b_exp,b_out,se_exp,se_out,n,
                                  initial_theta_n=50,initial_r=0,initial_c=1,initial_p=0.2,
                                  flip=1, EM_start=T,EM_maxit=2,
-                                 maxit=200,ivw=T,egger=T){
+                                 maxit=200,ivw=T,egger=T,lb.theta=NULL,ub.theta=NULL){
   if(flip==1){
     sign0 <- function(x) {
       x[x == 0] <- 1
@@ -54,7 +56,9 @@ mixIE_multiple_start <- function(b_exp,b_out,se_exp,se_out,n,
   bound.theta <- max(abs(b_out/b_exp))
   mrivw = mr_ivw_fe(b_exp,b_out,se_exp,se_out)
   mregger = mr_egger_ll(b_exp,b_out,se_exp,se_out)
-  theta_seq = runif(initial_theta_n,min=min(b_out/b_exp),max=max(b_out/b_exp))
+  if(is.null(lb.theta)) {lb.theta = -bound.theta}
+  if(is.null(ub.theta)) {ub.theta = bound.theta}
+  theta_seq = runif(initial_theta_n,min=lb.theta,max=ub.theta)
   theta_seq = c(0,theta_seq,min(b_out/b_exp),max(b_out/b_exp),mrivw$b,mregger$b)
   starting_values = crossing(theta_seq,initial_r)
   r_seq = starting_values$initial_r
