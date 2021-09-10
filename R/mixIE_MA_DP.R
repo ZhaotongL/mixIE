@@ -152,7 +152,7 @@ mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip=1,
 
       plot_og.df = data.frame(b_exp=b_exp,
                               b_out=b_out,
-                              invalid=factor(f_og_result$tau_BIC_MA>0.5,levels=c(T,F)))
+                              invalid=factor(f_og_result$tau_BIC_MA>=0.5,levels=c(T,F)),ordered=TRUE)
 
       scatter_og.plot = ggplot(data=plot_og.df, aes(x=b_exp, y=b_out,color=invalid)) +
         geom_point(size=point_size) +
@@ -165,7 +165,9 @@ mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip=1,
         scale_size_manual(values=2)
 
 
-      plot_dp.df = data.frame(b_exp=b_exp,b_out=b_out,invalid=factor(invalid_count_B>0.5,levels=c(T,F)))
+      plot_dp.df = data.frame(b_exp=b_exp,
+                              b_out=b_out,
+                              invalid=factor(invalid_count_B>=0.5,levels=c(T,F),ordered=TRUE))
 
       scatter_dp.plot = ggplot(plot_dp.df, aes(x=b_exp, y=b_out,color=invalid)) +
         geom_point(size=point_size) +

@@ -274,7 +274,7 @@ CEM <-function(b_exp,b_out,se_exp,se_out,
     tau_1_vec = tau_vec$tau_i1
 
     ## C-step
-    invalid_ind = which(tau_1_vec>0.5)
+    invalid_ind = which(tau_1_vec>=0.5)
     valid_ind = setdiff(1:m,invalid_ind)
     ## M-step
     if(length(invalid_ind)>0){
