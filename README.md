@@ -131,8 +131,8 @@ We can obtain the diagnostic plots of mixIE-MA-DP by setting `diagnostic_plot=TR
 set.seed(1)
 mixIE_MA_DP_result = mixIE_MA_DP(b_exp=FG_T2D$beta_hat_1,b_out=FG_T2D$beta_hat_2,
                            se_exp=FG_T2D$seb1,se_out = FG_T2D$seb2,
-                           n=69033,flip=1,point_size = 2,
-                           diagnostic_plot = TRUE) 
+                           n=69033,flip=1,
+                           diagnostic_plot = TRUE, point_size = 1.3) 
 g1=ggarrange(mixIE_MA_DP_result$scatter_og.plot, mixIE_MA_DP_result$scatter_dp.plot,labels =c("A:mixIE-MA", "B:mixIE-MA-DP"),
             common.legend=TRUE,legend = 'bottom',font.label = list(size = 8))
 g2=ggarrange(mixIE_MA_DP_result$iv_barplot, mixIE_MA_DP_result$est_hist,labels =c("C", "D"),
