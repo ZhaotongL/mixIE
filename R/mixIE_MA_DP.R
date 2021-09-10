@@ -11,6 +11,7 @@
 #' @param B Number of data perturbation, default is 200.
 #' @param thres_e Could ignore this.
 #' @param diagnostic_plot Should the function returns diagnostic plots? Default is FALSE
+#' @param point_size The size of points in the IV scatter plot.
 #' @param ... Arguments to be passed to \code{mixIE_MA}
 #'
 #' @import ggplot2 stats
@@ -60,7 +61,7 @@
 #' result$scatter_dp.plot # mixIE-MA-DP
 #'
 mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip=1,
-                       B=200,thres_e=Inf,diagnostic_plot=FALSE,...){
+                       B=200,thres_e=Inf,diagnostic_plot=FALSE,point_size=1,...){
   if(flip==1){
     sign0 <- function(x) {
       x[x == 0] <- 1
@@ -154,9 +155,10 @@ mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip=1,
                               invalid=factor(f_og_result$tau_BIC_MA>0.5,levels=c(T,F)))
 
       scatter_og.plot = ggplot(data=plot_og.df, aes(x=b_exp, y=b_out,color=invalid)) +
-        geom_point(size=1) +
+        geom_point(size=point_size) +
         theme_minimal() +
-        scale_colour_manual(name="invalid",values=c( "#377EB8","#E41A1C"))+
+        scale_colour_manual(labels=c("Invalid IVs", "Valid IVs"),values=c( "#E41A1C","#377EB8"))+
+        theme(legend.title=element_blank())+
         geom_vline(xintercept = 0) +
         geom_hline(yintercept = 0) +
         geom_abline(slope=f_og_result$theta_BIC_MA,intercept = 0,color="#A6CEE3") +
@@ -166,9 +168,10 @@ mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip=1,
       plot_dp.df = data.frame(b_exp=b_exp,b_out=b_out,invalid=factor(invalid_count_B>0.5,levels=c(T,F)))
 
       scatter_dp.plot = ggplot(plot_dp.df, aes(x=b_exp, y=b_out,color=invalid)) +
-        geom_point(size=1) +
+        geom_point(size=point_size) +
         theme_minimal() +
-        scale_colour_manual(name="invalid",values=c( "#377EB8","#E41A1C"))+
+        scale_colour_manual(labels=c("Invalid IVs", "Valid IVs"),values=c( "#E41A1C","#377EB8"))+
+        theme(legend.title=element_blank())+
         geom_vline(xintercept = 0) +
         geom_hline(yintercept = 0) +
         geom_abline(slope=fdp_theta,intercept=0,color="#1F78B4")

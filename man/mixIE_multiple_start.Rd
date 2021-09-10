@@ -14,12 +14,14 @@ mixIE_multiple_start(
   initial_r = 0,
   initial_c = 1,
   initial_p = 0.2,
-  flip = 0,
+  flip = 1,
   EM_start = T,
   EM_maxit = 2,
   maxit = 200,
   ivw = T,
-  egger = T
+  egger = T,
+  lb.theta = NULL,
+  ub.theta = NULL
 )
 }
 \arguments{
@@ -52,6 +54,10 @@ mixIE_multiple_start(
 \item{ivw}{Whether to add the fixed effect IVW in the model candidates explictly? Default is TRUE.}
 
 \item{egger}{Whether to add the Egger regression in the model candidates explictly? Default is TRUE.}
+
+\item{lb.theta}{Lower bound of theta from which starting values are generated.}
+
+\item{ub.theta}{Upper bound of theta from which starting values are generated.}
 }
 \value{
 A list

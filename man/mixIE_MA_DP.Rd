@@ -10,10 +10,11 @@ mixIE_MA_DP(
   se_exp,
   se_out,
   n,
-  flip,
+  flip = 1,
   B = 200,
   thres_e = Inf,
   diagnostic_plot = FALSE,
+  point_size = 1,
   ...
 )
 }
@@ -35,6 +36,8 @@ mixIE_MA_DP(
 \item{thres_e}{Could ignore this.}
 
 \item{diagnostic_plot}{Should the function returns diagnostic plots? Default is FALSE}
+
+\item{point_size}{The size of points in the IV scatter plot.}
 
 \item{...}{Arguments to be passed to \code{mixIE_MA}}
 }

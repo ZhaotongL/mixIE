@@ -63,10 +63,10 @@ mixIE_MA_result
 #> [1] 0.3510853
 #> 
 #> $pval_BIC_MA
-#> [1] 2.084116e-07
+#> [1] 2.084115e-07
 #> 
 #> $r_BIC_MA
-#> [1] 0.008778517
+#> [1] 0.008778518
 #> 
 #> $p_BIC_MA
 #> [1] 0.3529412
@@ -98,7 +98,7 @@ mixIE_MA_DP_result
 #> [1] 0.3510853
 #> 
 #> $mixIE_MA_pval
-#> [1] 2.084116e-07
+#> [1] 2.084115e-07
 #> 
 #> $mixIE_MA_pi
 #> [1] 0.3529412
@@ -109,20 +109,20 @@ mixIE_MA_DP_result
 #> [15] 0.9808303 0.1899306 1.0000000
 #> 
 #> $mixIE_MA_DP_theta
-#> [1] 1.252836
+#> [1] 1.212951
 #> 
 #> $mixIE_MA_DP_se
-#> [1] 1.143045
+#> [1] 1.128546
 #> 
 #> $mixIE_MA_DP_pval
-#> [1] 0.2730561
+#> [1] 0.2824681
 #> 
 #> $mixIE_MA_DP_pi
 #> [1] 0.2941176
 #> 
 #> $mixIE_MA_DP_tau
-#>  [1] 0.470 0.090 0.190 0.120 0.820 0.335 0.165 0.690 0.215 0.170 0.110 0.655
-#> [13] 0.935 0.160 0.350 0.110 1.000
+#>  [1] 0.470 0.085 0.190 0.120 0.800 0.335 0.175 0.625 0.210 0.170 0.105 0.615
+#> [13] 0.860 0.150 0.320 0.105 1.000
 ```
 
 We can obtain the diagnostic plots of mixIE-MA-DP by setting `diagnostic_plot=TRUE`:
@@ -131,8 +131,8 @@ We can obtain the diagnostic plots of mixIE-MA-DP by setting `diagnostic_plot=TR
 set.seed(1)
 mixIE_MA_DP_result = mixIE_MA_DP(b_exp=FG_T2D$beta_hat_1,b_out=FG_T2D$beta_hat_2,
                            se_exp=FG_T2D$seb1,se_out = FG_T2D$seb2,
-                           n=69033,flip=1,
-                           diagnostic_plot = TRUE)
+                           n=69033,flip=1,point_size = 2,
+                           diagnostic_plot = TRUE) 
 g1=ggarrange(mixIE_MA_DP_result$scatter_og.plot, mixIE_MA_DP_result$scatter_dp.plot,labels =c("A:mixIE-MA", "B:mixIE-MA-DP"),
             common.legend=TRUE,legend = 'bottom',font.label = list(size = 8))
 g2=ggarrange(mixIE_MA_DP_result$iv_barplot, mixIE_MA_DP_result$est_hist,labels =c("C", "D"),
