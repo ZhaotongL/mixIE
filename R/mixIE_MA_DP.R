@@ -86,7 +86,7 @@ mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip=1,
       b_out_dp = b_out + e_out_dp
       f_result = mixIE_MA(b_exp=b_exp,b_out=b_out_dp,se_exp=se_exp,se_out=sqrt(2)*se_out,n=n,flip=flip,...)
       invalid_p_B = invalid_p_B + f_result$tau_BIC_MA
-      invalid_ind=which(f_result$tau_BIC_MA>0.5)
+      invalid_ind=which(f_result$tau_BIC_MA>=0.5)
       valid_ind = setdiff(1:m,invalid_ind)
       invalid_count_B[invalid_ind] = invalid_count_B[invalid_ind]+1
       if(length(valid_ind)==0){

@@ -312,7 +312,7 @@ CEM <-function(b_exp,b_out,se_exp,se_out,
   }
 
   tau_1_full = rep(0,m)
-  tau_1_full[which(tau_1_vec>0.5)] = 1
+  tau_1_full[which(tau_1_vec>=0.5)] = 1
   tau_0_full = 1 - tau_1_full
   B_complete = B_Complete(b_exp,b_out,se_exp,se_out,theta,r,c,p,tau_0_vec,tau_1_vec)
   B_missing = S_Complete(b_exp,b_out,se_exp,se_out,theta,r,c,p,tau_0_vec,tau_1_vec)

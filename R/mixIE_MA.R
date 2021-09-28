@@ -225,7 +225,7 @@ mixIE_MA <- function(b_exp,b_out,se_exp,se_out,n,
       } else{
         tau_BIC_MA = tau_1_mat[BICmodel_ind,]
       }
-      p_BIC_MA = mean(tau_BIC_MA>0.5)
+      p_BIC_MA = mean(tau_BIC_MA>=0.5)
       se_BIC_MA = sum(weight_vec*sqrt(se_vec[BICmodel_ind]^2 +(theta_vec[BICmodel_ind] -theta_BIC_MA)^2))
       ser_BIC_MA = sum(weight_vec*sqrt(ser_vec[BICmodel_ind]^2 +(r_vec[BICmodel_ind] -r_BIC_MA)^2))
       pval_BIC_MA = 2*pnorm(abs(theta_BIC_MA/se_BIC_MA),lower.tail=FALSE)
