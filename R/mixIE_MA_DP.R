@@ -152,12 +152,12 @@ mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip=1,
 
       plot_og.df = data.frame(b_exp=b_exp,
                               b_out=b_out,
-                              invalid=factor(f_og_result$tau_BIC_MA>=0.5,levels=c(T,F)),ordered=TRUE)
+                              invalid=factor(f_og_result$tau_BIC_MA>=0.5,levels=c(T,F),ordered=TRUE))
 
       scatter_og.plot = ggplot(data=plot_og.df, aes(x=b_exp, y=b_out,color=invalid)) +
         geom_point(size=point_size) +
         theme_minimal() +
-        scale_colour_manual(labels=c("Invalid IVs", "Valid IVs"),values=c( "#E41A1C","#377EB8"))+
+        scale_colour_manual(labels=c("Invalid IVs", "Valid IVs"),values=c( "#E41A1C","#377EB8"),drop=FALSE)+
         theme(legend.title=element_blank())+
         geom_vline(xintercept = 0) +
         geom_hline(yintercept = 0) +
@@ -172,7 +172,7 @@ mixIE_MA_DP<- function(b_exp,b_out,se_exp,se_out,n,flip=1,
       scatter_dp.plot = ggplot(plot_dp.df, aes(x=b_exp, y=b_out,color=invalid)) +
         geom_point(size=point_size) +
         theme_minimal() +
-        scale_colour_manual(labels=c("Invalid IVs", "Valid IVs"),values=c( "#E41A1C","#377EB8"))+
+        scale_colour_manual(labels=c("Invalid IVs", "Valid IVs"),values=c( "#E41A1C","#377EB8"),drop=FALSE)+
         theme(legend.title=element_blank())+
         geom_vline(xintercept = 0) +
         geom_hline(yintercept = 0) +
