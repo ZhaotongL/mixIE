@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-R package for Mendelian randomization with mixIE methods.
+R package for Mendelian randomization with mixIE methods proposed in this paper:  [**Lin, Z., Deng, Y., & Pan, W. (2021). Combining the strengths of inverse-variance weighting and Egger regression in Mendelian randomization using a mixture of regressions model. PLoS genetics, 17(11), e1009922.**](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1009922).
 
 ## Installation
 

@@ -107,7 +107,7 @@ mixIE_multiple_start <- function(b_exp,b_out,se_exp,se_out,n,
     se_vec[i+2]=megger$se
     ser_vec[i+2]=megger$se_i
     pval_vec[i+2]=megger$pval
-    lcom_egger=sum(log(L1_i(b_exp,b_out,se_exp,se_out,megger$b,megger$b_i,(sqrt((m-2)/m)*megger$sig)^2)))
+    lcom_egger=sum(log(L1_i(b_exp,b_out,se_exp,se_out,megger$b,megger$b_i,max(1,(sqrt((m-2)/m)*megger$sig)^2))))
     BIC_vec[i+2]=-2*lcom_egger+log(n)*3
     p_vec[i+2]=1
     r_vec[i+2]=megger$b_i

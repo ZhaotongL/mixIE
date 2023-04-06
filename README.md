@@ -1,10 +1,17 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 # mixIE
 
 <!-- badges: start -->
 <!-- badges: end -->
-R package for Mendelian randomization with mixIE methods.
+
+R package for Mendelian randomization with mixIE methods proposed in
+this paper: [**Lin, Z., Deng, Y., & Pan, W. (2021). Combining the
+strengths of inverse-variance weighting and Egger regression in
+Mendelian randomization using a mixture of regressions model. PLoS
+genetics, 17(11),
+e1009922.**](https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1009922).
 
 ## Installation
 
@@ -15,6 +22,7 @@ install.packages("mixIE")
 ```
 
 -->
+
 Install the development version from [GitHub](https://github.com/) with:
 
 ``` r
@@ -24,7 +32,9 @@ devtools::install_github("ZhaotongL/mixIE")
 
 ## Example
 
-Here is an example which shows how to apply mixIE methods to make inference about the causal effect from **Fast Glucose (FG)** to **Type-2 Diabetes (T2D)**
+Here is an example which shows how to apply mixIE methods to make
+inference about the causal effect from **Fast Glucose (FG)** to **Type-2
+Diabetes (T2D)**
 
 ``` r
 library(mixIE)
@@ -48,7 +58,8 @@ head(FG_T2D)
 #> 6 diagram_t2d
 ```
 
-Now we perform mixIE-MA with the outcome sample size 69033 and reorientating IVs with all positive associations with the exposure.
+Now we perform mixIE-MA with the outcome sample size 69033 and
+reorientating IVs with all positive associations with the exposure.
 
 ``` r
 set.seed(1)
@@ -83,7 +94,8 @@ mixIE_MA_result
 #> [1]  1.872933  1.995895 -1.493302  1.430731
 ```
 
-We can also obtain the results for mixIE-MA when directly implementing mixIE-MA-DP:
+We can also obtain the results for mixIE-MA when directly implementing
+mixIE-MA-DP:
 
 ``` r
 set.seed(1)
@@ -125,7 +137,8 @@ mixIE_MA_DP_result
 #> [13] 0.860 0.150 0.320 0.105 1.000
 ```
 
-We can obtain the diagnostic plots of mixIE-MA-DP by setting `diagnostic_plot=TRUE`:
+We can obtain the diagnostic plots of mixIE-MA-DP by setting
+`diagnostic_plot=TRUE`:
 
 ``` r
 set.seed(1)
